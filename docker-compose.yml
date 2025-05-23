@@ -1,0 +1,9 @@
+services:
+  nest-app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "npm run start:dev"
