@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateTaskDto } from "./dto/task.dto";
 
@@ -15,10 +15,18 @@ export class TaskService {
             }
         })
     }
-    async getAllTasks() {}
-    async getTaskById(id: string) {}
-
-
-    async deleteTask(id: string) {}
-    async updateTask(id: string, data: any) {}
+    async getAllTasks() {
+        return this.prismaService.task.findMany({
+            orderBy: {
+               id: 'desc'
+            }
+        })
+    }
+    async getTaskById(id: number) {
+        return this.prismaService.task.findUnique({
+            where: {
+                id 
+            }
+       })
+    }
 }
