@@ -6,12 +6,12 @@ import { CreateTaskDto } from "./dto/task.dto";
 export class TaskService {
     constructor (private readonly prismaService: PrismaService){}
 
-    async createTask(data: CreateTaskDto) {
+    async createTask(CreateTaskDto: CreateTaskDto) {
         return this.prismaService.task.create({
             data: {
-                title: data.title,
-                description: data.description,
-                status: data.status
+                title: CreateTaskDto.title,
+                description: CreateTaskDto.description,
+                status: CreateTaskDto.status
             }
         })
     }
