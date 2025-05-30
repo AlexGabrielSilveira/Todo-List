@@ -11,14 +11,15 @@ export class AuthTokenGuard {
 
         if(!token) {
             if (!token) {
-            throw new UnauthorizedException("You must provide a valid token in the Authorization header!");
+            throw new UnauthorizedException("You need to Loggin first!");
         }
         }
         try {
             const payload = await this.jwtService.verifyAsync(token, {
                 secret: process.env.JWT_SECRET,
-            });
-            console.log("Payload: ", payload);
+            })
+            request['user'] = payload;
+            
         } catch (err){
             console.error("Token verification failed:", err.message);
             throw new UnauthorizedException("Invalid token provided!");

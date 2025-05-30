@@ -1,6 +1,6 @@
 // src/task/dto/create-task.dto.ts
 import { Status } from '@prisma/client';
-import { IsEnum, IsString, Length } from 'class-validator';
+import { IsEnum, IsNumber, IsPositive, IsString, Length } from 'class-validator';
 
 export class CreateTaskDto {
 
@@ -14,4 +14,6 @@ export class CreateTaskDto {
 
     @IsEnum(Status)
     status: Status;
+
+
 }
