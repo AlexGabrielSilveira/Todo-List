@@ -2,13 +2,15 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } f
 import { TaskService } from "./task.service";
 import { CreateTaskDto } from "./dto/task.dto";
 import { AuthTokenGuard } from "src/auth/guard/auth-token.guard";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 @UseGuards(AuthTokenGuard)
+@ApiBearerAuth('access-token')
 @Controller("task")
 export class TaskController {
     constructor(private readonly taskService: TaskService) {}
 
-    @Post("create")
+    @Post("/create")
     async createTask(@Body() createTaskDto:  CreateTaskDto, @Request() req: any) {
         const userId = req.user.sub;
         return this.taskService.createTask(createTaskDto, userId);
