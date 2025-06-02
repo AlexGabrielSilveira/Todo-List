@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateTaskDto } from "./dto/task.dto";
+import { Status } from "@prisma/client";
 
 @Injectable()
 export class TaskService {
@@ -54,6 +55,20 @@ export class TaskService {
         return this.prismaService.task.delete({
             where: {
                 id: deleteTaskId
+            }
+        })
+    }
+    async searchTasks(status: Status, userId: number) {
+        status = status.toUpperCase() as Status; 
+
+        if (!Object.values(Status).includes(status)) {
+            throw new Error("Invalid status provided");
+        }
+        
+        return this.prismaService.task.findMany({
+            where: {
+                status: status,
+                userId: userId
             }
         })
     }

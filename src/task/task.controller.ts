@@ -3,6 +3,7 @@ import { TaskService } from "./task.service";
 import { CreateTaskDto } from "./dto/task.dto";
 import { AuthTokenGuard } from "src/auth/guard/auth-token.guard";
 import { ApiBearerAuth } from "@nestjs/swagger";
+import { Status } from "@prisma/client";
 
 @UseGuards(AuthTokenGuard)
 @ApiBearerAuth('access-token')
@@ -29,5 +30,10 @@ export class TaskController {
     async deleteTask(@Param("id") deleteTaskId: number,  @Request() req: any) {
         const userId = req.user.sub;
         return this.taskService.deleteTask(deleteTaskId, userId);
+    }
+    @Get("search/:status")
+    async searchTasks(@Param("status") status: Status, @Request() req: any) {
+        const userId = req.user.sub;
+        return this.taskService.searchTasks(status, userId);
     }
 }
